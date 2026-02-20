@@ -1,39 +1,68 @@
-ContractFlow AI
-Enterprise-grade bulk contract automation with AI-powered summaries. Transform hours of manual contract work into seconds of intelligent automation.
+# ContractFlow AI
 
-Overview
-ContractFlow AI automates the tedious process of generating personalized contracts from templates. Upload a Word template and CSV data, and generate hundreds of customized contracts in seconds - complete with AI-powered plain-English summaries.
-Key Features:
+**Enterprise-grade bulk contract automation with AI-powered summaries.**  
+Transform hours of manual contract work into seconds of intelligent automation.
 
-Smart CSV-to-template field mapping with auto-detection
-Bulk PDF generation using Foxit Document Generation API
-AI-powered contract summaries via Google Gemini 3
-Automated ZIP bundling with Foxit PDF Services API
-Professional, responsive UI with real-time progress tracking
+---
 
+## 🚀 Overview
 
+ContractFlow AI automates the tedious process of generating personalized contracts from templates.
 
-Prerequisites
+Upload a Word template and CSV data, and instantly generate hundreds of customized contracts — complete with AI-powered plain-English summaries and automatic ZIP bundling.
 
-Node.js 18+ and npm
-Foxit API credentials 
-Google Gemini API key
+Built for the Foxit Hackathon.
 
-Installation
+---
 
-Clone the repository
+## ✨ Key Features
 
-bashgit clone https://github.com/yourusername/contractflow-ai.git
+- 🔍 Smart CSV-to-template field mapping with auto-detection  
+- 📄 Bulk PDF generation via Foxit Document Generation API  
+- 🤖 AI-powered contract summaries using Google Gemini 3  
+- 📦 Automatic ZIP bundling of all contracts  
+- ⚡ Real-time progress tracking UI  
+- 🎨 Clean, responsive interface built with Next.js + Tailwind  
+
+---
+
+## 🛠 Tech Stack
+
+| Technology | Purpose |
+|------------|----------|
+| Next.js 16 | React framework (App Router) |
+| React 18 | UI library |
+| Tailwind CSS | Utility-first styling |
+| Foxit Document Generation API | PDF generation from Word templates |
+| Foxit PDF Services API | ZIP bundling |
+| Google Gemini 3 | AI contract summaries |
+| PapaParse | CSV parsing |
+| JSZip | ZIP creation |
+| Axios | API requests |
+
+---
+
+## ⚙️ Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/contractflow-ai.git
 cd contractflow-ai
+```
 
-Install dependencies
+### 2. Install Dependencies
 
-bashnpm install
+```bash
+npm install
+```
 
-Set up environment variables
+### 3. Set Up Environment Variables
 
-Create a .env.local file in the root directory:
-env# Foxit Document Generation API
+Create a `.env.local` file in the root directory:
+
+```env
+# Foxit Document Generation API
 FOXIT_DOCGEN_BASE_URL=https://na1.fusion.foxit.com
 FOXIT_DOCGEN_CLIENT_ID=your_docgen_client_id
 FOXIT_DOCGEN_CLIENT_SECRET=your_docgen_client_secret
@@ -45,191 +74,206 @@ FOXIT_PDF_CLIENT_SECRET=your_pdf_services_client_secret
 
 # Google Gemini API
 GEMINI_API_KEY=your_gemini_api_key
+```
 
-Run the development server
+### 4. Run Development Server
 
-bashnpm run dev
+```bash
+npm run dev
+```
 
-Open your browser
+Visit:
 
-Navigate to http://localhost:3000
+```
+http://localhost:3000
+```
 
-Project Structure
-contractflow-ai/
-├── app/
-│   ├── page.tsx              # Main application UI (4-step wizard)
-│   ├── globals.css           # Global styles + animations
-│   └── layout.tsx            # Root layout
-├── components/
-│   ├── FileUpload.jsx        # Drag-and-drop file upload component
-│   ├── MappingTable.jsx      # CSV-to-template field mapping UI
-│   └── ProgressBar.jsx       # Generation progress indicator
-├── pages/api/
-│   ├── generate-contracts.js # Backend: Foxit Document Generation API
-│   ├── summarize.js          # Backend: Google Gemini AI summaries
-│   └── bundle-zip.js         # Backend: Foxit PDF Services ZIP bundling
-├── utils/
-│   ├── csvParser.js          # CSV parsing and header extraction
-│   └── foxitClient.js        # Foxit API client wrapper
-├── .env.local                # API credentials (create this file)
-├── package.json              # Dependencies and scripts
-└── README.md                 # This file
+---
 
-Key Files Explained
-app/page.tsx
-Main application component with:
+## 🧠 How It Works
 
-4-step wizard UI (Upload Template → Upload CSV → Map Fields → Generate)
-Smart auto-mapping logic for CSV columns to template fields
-Progress tracking and modal confirmations
-AI summary preview functionality
+### Step 1 — Upload Word Template
 
-utils/foxitClient.js
-Foxit API integration:
+Upload a `.docx` file containing placeholders:
 
-Authenticates using client credentials (not OAuth)
-Calls /document-generation/api/GenerateDocumentBase64 endpoint
-Handles PDF generation with Word templates + JSON data
-Manages error handling and response parsing
-
-pages/api/generate-contracts.js
-Backend API route:
-
-Parses multipart form data (template + CSV + field mapping)
-Converts template to base64
-Loops through CSV rows and generates individual PDFs
-Returns array of base64-encoded PDFs
-
-pages/api/summarize.js
-Google Gemini AI integration:
-
-Analyzes first contract for context
-Generates structured plain-English summary
-Removes markdown formatting for clean output
-Returns formatted sections (OVERVIEW, KEY TERMS, TIMELINE, etc.)
-
-pages/api/bundle-zip.js
-ZIP bundling:
-
-Takes array of PDFs + AI summary
-Uses JSZip to create archive
-Returns downloadable ZIP file
-
-
-How It Works
-1. User Uploads Template
-Upload a .docx Word document with placeholders:
+```text
 {{client_name}}
 {{client_email}}
 {{contract_value}}
 {{start_date}}
 {{end_date}}
-2. User Uploads CSV Data
-CSV with client information:
-csvCustomer Full Name,Contact Email,Total Contract Amount,Project Start,Project End
+```
+
+---
+
+### Step 2 — Upload CSV Data
+
+Example CSV:
+
+```csv
+Customer Full Name,Contact Email,Total Contract Amount,Project Start,Project End
 John Smith,john@example.com,$50000,2024-03-01,2025-03-01
 Jane Doe,jane@example.com,$75000,2024-04-01,2025-04-01
-3. Smart Field Mapping
-App auto-detects matches:
+```
 
-client_name ← Customer Full Name
-client_email ← Contact Email
-contract_value ← Total Contract Amount
+---
 
-User can manually override any mapping via dropdowns.
-4. Generate Contracts
+### Step 3 — Smart Field Mapping
 
-Foxit Document Generation API fills templates with data
-Google Gemini 3 analyzes first contract
-Foxit PDF Services API bundles everything into ZIP
-User downloads personalized contracts + AI summary
+The app auto-detects matches:
 
+```
+client_name      ← Customer Full Name
+client_email     ← Contact Email
+contract_value   ← Total Contract Amount
+```
 
-API Integration Details
-Foxit Document Generation API
-Endpoint: POST /document-generation/api/GenerateDocumentBase64
-Authentication: Client credentials in headers (not OAuth)
-javascriptheaders: {
-  'client_id': 'your_client_id',
-  'client_secret': 'your_client_secret'
+Users can manually override mappings if needed.
+
+---
+
+### Step 4 — Generate Contracts
+
+1. Foxit fills templates with CSV data  
+2. Google Gemini analyzes the first contract  
+3. Contracts + AI summary are bundled into a ZIP  
+4. User downloads everything instantly  
+
+---
+
+## 📁 Project Structure
+
+```bash
+contractflow-ai/
+├── app/
+│   ├── page.tsx
+│   ├── globals.css
+│   └── layout.tsx
+├── components/
+│   ├── FileUpload.jsx
+│   ├── MappingTable.jsx
+│   └── ProgressBar.jsx
+├── pages/api/
+│   ├── generate-contracts.js
+│   ├── summarize.js
+│   └── bundle-zip.js
+├── utils/
+│   ├── csvParser.js
+│   └── foxitClient.js
+├── .env.local
+├── package.json
+└── README.md
+```
+
+---
+
+## 🔌 API Integration Details
+
+### Foxit Document Generation API
+
+**Endpoint**
+```
+POST /document-generation/api/GenerateDocumentBase64
+```
+
+**Authentication**
+Client credentials in headers:
+
+```javascript
+headers: {
+  client_id: "your_client_id",
+  client_secret: "your_client_secret"
 }
-Request:
-json{
+```
+
+**Request Body**
+
+```json
+{
   "outputFormat": "pdf",
   "documentValues": {
     "client_name": "John Smith",
     "client_email": "john@example.com"
   },
-  "base64FileString": "[base64 encoded .docx template]"
+  "base64FileString": "[base64 encoded .docx]"
 }
-Response:
-json{
-  "base64FileString": "[base64 encoded PDF]"
-}
-Google Gemini API
-Model: gemini-3-flash-preview
-Prompt: Structured analysis request with specific sections (OVERVIEW, KEY TERMS, TIMELINE, FINANCIAL TERMS, IMPORTANT CONSIDERATIONS)
-Output: Plain-English contract summary with headers
+```
 
-Dependencies
-Core Framework
+---
 
-next@16.1.6 - React framework with App Router
-react@18 - UI library
-tailwindcss - Utility-first CSS
+### Google Gemini API
 
-API Integration
+- Model: `gemini-3-flash-preview`
+- Generates structured sections:
+  - OVERVIEW
+  - KEY TERMS
+  - TIMELINE
+  - FINANCIAL TERMS
+  - IMPORTANT CONSIDERATIONS
 
-axios - HTTP client for API calls
-@google/generative-ai - Google Gemini SDK
+Returns clean, plain-English summary.
 
-File Processing
+---
 
-papaparse - CSV parsing
-jszip - ZIP file creation
-file-saver - File download handling
-formidable - Multipart form parsing
+## 🧪 Usage Example
 
-Utilities
-
-pdf-lib - PDF manipulation (if needed)
-
-
-Usage Example
-bash# 1. Start development server
+```bash
+# Start server
 npm run dev
 
-# 2. Navigate to http://localhost:3000
+# Upload template
+# Upload CSV
+# Review field mappings
+# Click "Generate Contracts"
+# Download ZIP
+```
 
-# 3. Upload template (e.g., SERVICE_AGREEMENT.docx)
+---
 
-# 4. Upload CSV data (e.g., clients.csv with 10 rows)
+## 🛠 Troubleshooting
 
-# 5. Review auto-mapped fields (or adjust manually)
+### 404 from Foxit API
+Ensure endpoint is:
+```
+/document-generation/api/GenerateDocumentBase64
+```
 
-# 6. Click "Generate Contracts"
+### "Wrong signature" error
+Make sure you're uploading a `.docx`, not a `.pdf`.
 
-# 7. Review AI summary (optional)
+### Gemini model not found
+Use:
+```
+gemini-3-flash-preview
+```
 
-# 8. Download ZIP with all contracts
+### CSV auto-mapping fails
+Column names may be too different. Use manual dropdown mapping.
 
-Running Locally
-This project runs locally on your machine. Follow the Quick Start guide above to get it running at http://localhost:3000.
-Note: This is a demonstration project built for the Foxit hackathon. The core functionality (Foxit API integration, field mapping, AI summaries) works perfectly in local development.
+---
 
-Troubleshooting
-"404 Not Found" from Foxit API
-Issue: Wrong endpoint path
-Solution: Ensure using /document-generation/api/GenerateDocumentBase64 (not /v1/documents)
-"Wrong signature" error
-Issue: Uploaded PDF instead of Word document
-Solution: Foxit Document Generation requires .docx files, not .pdf
-Gemini model not found
-Issue: Using deprecated model name
-Solution: Use gemini-3-flash-preview instead of gemini-pro
-CSV auto-mapping fails
-Issue: Column names too different from template fields
-Solution: Use manual mapping dropdowns to connect fields
+## 🏁 Running Locally
 
-Tech Stack
-TechnologyPurposeNext.js 16React framework with server-side renderingTailwind CSSUtility-first stylingFoxit Document Generation APIPDF generation from Word templatesFoxit PDF Services APIPDF bundling and processingGoogle Gemini 3AI-powered contract summariesPapaParseCSV parsingJSZipZIP file creation
+This project runs entirely locally.  
+All core functionality (Foxit API integration, field mapping, AI summaries) works in local development.
+
+---
+
+## 📜 License
+
+Built for the Foxit Hackathon.  
+For demonstration purposes only.
+
+---
+
+## 💡 Why This Matters
+
+Legal teams spend hours generating repetitive contracts manually.
+
+ContractFlow AI reduces that workflow to:
+
+**Upload → Map → Generate → Download**
+
+From hours to seconds.
+
+---
